@@ -465,41 +465,63 @@ const SRDegrees = () => {
 // ── EVENTS ─────────────────────────────────────────────────────────────────
 const SREvents = () => {
   const [calModal, setCalModal] = React.useState(false);
-  React.useEffect(() => {
-    const s = document.createElement('script');
-    s.type = 'text/javascript';
-    s.src = '//www.calendarwiz.com/calendars/ucfeeder.php?crd=tucsonscottishrite&theme=Master%20Theme';
-    document.getElementById('calendarwiz-container').appendChild(s);
-  }, []);
-  React.useEffect(() => {
-    if (calModal) {
-      const container = document.getElementById('calendarwiz-modal-body');
-      if (container && !container.dataset.loaded) {
-        container.dataset.loaded = '1';
-        const s = document.createElement('script');
-        s.src = 'https://www.calendarwiz.com/cwlist/cwresponsive.js/?crd=tucsonscottishrite&view=calendar&nolog=1&skiptitle=1&cid[]=285330&cid[]=285329&cid[]=285327&cid[]=285328&cid[]=285324&cid[]=285334&calwidth=100%25&calheight=1200&mobilepref=mobile';
-        container.appendChild(s);
-      }
-    }
-  }, [calModal]);
+
   const events = [
-  { date: { month: 'May', day: '6' }, title: 'Stated Meeting', type: 'Meeting', desc: 'Regular stated meeting of the Valley. All members welcome. Dinner at 6:00 PM, meeting at 7:00 PM.' },
-  { date: { month: 'May', day: '17' }, title: 'Reunion — Spring Degree Conferral', type: 'Reunion', desc: 'Spring degrees conferred. Candidates and sponsors are asked to arrive by 8:00 AM sharp.' },
-  { date: { month: 'Jun', day: '3' }, title: 'Stated Meeting', type: 'Meeting', desc: 'Regular stated meeting of the Valley with election of officers.' },
-  { date: { month: 'Jun', day: '21' }, title: 'Installation of Officers', type: 'Special', desc: 'Annual installation ceremony. Open to all Master Masons and their families.' },
-  { date: { month: 'Jul', day: '4' }, title: 'Independence Day — Dark', type: 'Holiday', desc: 'The Valley will be dark in observance of the Independence Day holiday.' },
-  { date: { month: 'Aug', day: '5' }, title: 'Stated Meeting', type: 'Meeting', desc: 'Regular stated meeting. Officers report and committee updates.' }];
+    { date: { month: 'May', day: '6' }, title: 'Stated Meeting', type: 'Meeting', desc: 'Regular stated meeting of the Valley. All members welcome. Dinner at 6:00 PM, meeting at 7:00 PM.' },
+    { date: { month: 'May', day: '17' }, title: 'Reunion — Spring Degree Conferral', type: 'Reunion', desc: 'Spring degrees conferred. Candidates and sponsors are asked to arrive by 8:00 AM sharp.' },
+    { date: { month: 'Jun', day: '3' }, title: 'Stated Meeting', type: 'Meeting', desc: 'Regular stated meeting of the Valley with election of officers.' },
+    { date: { month: 'Jun', day: '21' }, title: 'Installation of Officers', type: 'Special', desc: 'Annual installation ceremony. Open to all Master Masons and their families.' },
+    { date: { month: 'Jul', day: '4' }, title: 'Independence Day — Dark', type: 'Holiday', desc: 'The Valley will be dark in observance of the Independence Day holiday.' },
+    { date: { month: 'Aug', day: '5' }, title: 'Stated Meeting', type: 'Meeting', desc: 'Regular stated meeting. Officers report and committee updates.' },
+    { date: { month: 'Aug', day: '19' }, title: 'Reunion — Fall Degree Conferral', type: 'Reunion', desc: 'Fall reunion conferring degrees of the Scottish Rite. Candidates arrive at 8:00 AM.' },
+  ];
 
   const typeColor = { Meeting: 'var(--gold)', Reunion: '#7b8cde', Special: '#6dbe9a', Holiday: '#b0b0b0' };
+
   return (<>
     <section id="events" data-screen-label="Events" style={{ background: 'var(--cream)', padding: '6rem 1.5rem' }}>
       <div style={{ maxWidth: 900, margin: '0 auto' }}>
         <SectionHeader eyebrow="Calendar" title="Upcoming Events" subtitle="The Valley meets regularly throughout the year. All Master Masons in good standing are welcome." />
-        <div id="calendarwiz-container" />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          {events.map((ev, i) => (
+            <div key={i} style={{
+              display: 'grid', gridTemplateColumns: '72px 1fr auto',
+              gap: '1.25rem', alignItems: 'center',
+              background: '#fff', borderRadius: 8,
+              padding: '1.25rem 1.5rem', border: '1px solid var(--card-border)',
+              transition: 'transform 0.2s, box-shadow 0.2s',
+            }}
+              onMouseOver={e => { e.currentTarget.style.transform = 'translateX(4px)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.07)'; }}
+              onMouseOut={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none'; }}>
+              <div style={{ textAlign: 'center', background: 'var(--navy)', borderRadius: 6, padding: '0.6rem 0.4rem' }}>
+                <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--gold)' }}>{ev.date.month}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.6rem', fontWeight: 700, color: '#fff', lineHeight: 1 }}>{ev.date.day}</div>
+              </div>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.3rem' }}>
+                  <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: typeColor[ev.type] || 'var(--gold)' }}>{ev.type}</span>
+                </div>
+                <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '1.15rem', fontWeight: 600, color: 'var(--navy)', margin: '0 0 0.3rem' }}>{ev.title}</h4>
+                <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.88rem', color: 'var(--text-muted)', margin: 0, lineHeight: 1.5 }}>{ev.desc}</p>
+              </div>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--card-border-heavy)" strokeWidth="1.5" style={{ flexShrink: 0 }}>
+                <polyline points="7,4 13,10 7,16" />
+              </svg>
+            </div>
+          ))}
+        </div>
         <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
-          <button onClick={() => setCalModal(true)} style={{ background: 'none', border: '1px solid var(--navy)', color: 'var(--navy)', fontFamily: 'var(--font-body)', fontSize: '0.82rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '0.85rem 2rem', borderRadius: 4, cursor: 'pointer', transition: 'background 0.2s,color 0.2s' }}
-          onMouseOver={(e) => {e.target.style.background = 'var(--navy)';e.target.style.color = '#fff';}}
-          onMouseOut={(e) => {e.target.style.background = 'none';e.target.style.color = 'var(--navy)';}}>View Full Calendar</button>
+          <button onClick={() => setCalModal(true)} style={{
+            background: 'none', border: '1px solid var(--navy)', color: 'var(--navy)',
+            fontFamily: 'var(--font-body)', fontSize: '0.82rem', fontWeight: 700,
+            letterSpacing: '0.1em', textTransform: 'uppercase',
+            padding: '0.85rem 2rem', borderRadius: 4, cursor: 'pointer',
+            transition: 'background 0.2s, color 0.2s',
+          }}
+            onMouseOver={e => { e.target.style.background = 'var(--navy)'; e.target.style.color = '#fff'; }}
+            onMouseOut={e => { e.target.style.background = 'none'; e.target.style.color = 'var(--navy)'; }}>
+            View Full Calendar
+          </button>
         </div>
       </div>
     </section>
@@ -510,24 +532,46 @@ const SREvents = () => {
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', fontWeight: 600, color: 'var(--navy)', margin: 0 }}>Full Calendar</h3>
             <button onClick={() => setCalModal(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', fontSize: '1.5rem', lineHeight: 1, padding: '0.25rem' }}>×</button>
           </div>
-          <div id="calendarwiz-modal-body" style={{ flex: 1, overflowY: 'auto', padding: '1.5rem' }} />
+          <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {events.map((ev, i) => (
+                <div key={i} style={{
+                  display: 'grid', gridTemplateColumns: '72px 1fr',
+                  gap: '1.25rem', alignItems: 'center',
+                  background: '#fff', borderRadius: 8,
+                  padding: '1.25rem 1.5rem', border: '1px solid var(--card-border)',
+                }}>
+                  <div style={{ textAlign: 'center', background: 'var(--navy)', borderRadius: 6, padding: '0.6rem 0.4rem' }}>
+                    <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--gold)' }}>{ev.date.month}</div>
+                    <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.6rem', fontWeight: 700, color: '#fff', lineHeight: 1 }}>{ev.date.day}</div>
+                  </div>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.3rem' }}>
+                      <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: typeColor[ev.type] || 'var(--gold)' }}>{ev.type}</span>
+                    </div>
+                    <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '1.15rem', fontWeight: 600, color: 'var(--navy)', margin: '0 0 0.3rem' }}>{ev.title}</h4>
+                    <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.88rem', color: 'var(--text-muted)', margin: 0, lineHeight: 1.5 }}>{ev.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     )}
   </>);
-
 };
 
-// ── OFFICERS ───────────────────────────────────────────────────────────────
+// ── OFFICERSCERS ───────────────────────────────────────────────────────────────
 const SROfficers = () => {
   const officers = [
-  { title: 'Venerable Master', name: 'WB Kenneth Barrett, 32° KCCH', body: 'Lodge of Perfection' },
+  { title: 'Thrice Potent Master', name: 'WB Kenneth Barrett, 32° KCCH', body: 'Lodge of Perfection' },
   { title: 'Wise Master', name: 'WB Gregory Johnson, 32° KCCH', body: 'Chapter of Rose Croix' },
   { title: 'Commander', name: 'Ill. David L. Hernandez, 32°', body: 'Council of Kadosh' },
   { title: 'Master of Kadosh', name: 'WB Michael \'Mickey\' Candela, 32° KSA', body: 'Consistory' },
-  { title: 'Secretary', name: 'WB Joseph Felix, 32° KSA', body: 'Valley of Tucson' },
-  { title: 'Treasurer', name: 'MWB Gerald Lankin, 33°', body: 'Valley of Tucson' },
-  { title: 'Personal Representative', name: 'MWB Craig Gross, 33°', body: 'Supreme Council' },
+  { title: 'Secretary General', name: 'Ill. Frank E. Torres, 33°', body: 'Valley of Tucson' },
+  { title: 'Treasurer General', name: 'Bro. James C. Wheeler, 32°', body: 'Valley of Tucson' },
+  { title: 'Personal Representative', name: 'Ill. Thomas B. Garcia, 33°', body: 'Supreme Council' },
   { title: 'Almoner', name: 'WB Michael \'Mickey\' Candela, 32° KSA', body: 'Valley of Tucson' }];
 
   return (
