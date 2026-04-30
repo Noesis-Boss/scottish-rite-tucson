@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="module">
+// Test ES module loading
+import("/assets/index-xrVUwsov.js").then(() => {
+  document.body.innerHTML = '<p style="color:green">JS loaded successfully</p>';
+}).catch(e => {
+  document.body.innerHTML = '<p style="color:red">JS failed: ' + e.message + '</p>';
+});
+</script>
+</head>
+<body>
+<p>Testing ES module...</p>
+</body>
+</html>
