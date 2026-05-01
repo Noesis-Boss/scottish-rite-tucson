@@ -81,10 +81,32 @@ const SRHero = () => {
             style={{ width: '100%', maxWidth: 520, marginBottom: '2.5rem', filter: 'brightness(0) invert(1) sepia(1) saturate(0.5) brightness(1.1)' }}/>
         </div>
 
+        <p style={{
+          fontFamily: 'var(--font-display)',
+          fontSize: 'clamp(1.05rem, 2.2vw, 1.5rem)',
+          color: 'rgba(255,255,255,0.6)',
+          letterSpacing: '0.25em',
+          textTransform: 'uppercase',
+          margin: '0 0 1.5rem',
+          fontWeight: 400,
+          opacity: visible ? 1 : 0,
+          transition: 'opacity 0.8s ease 0.75s',
+        }}>
+          Tucson Scottish Rite
+        </p>
+
         <div style={{
-          width: 60, height: 1, background: 'var(--gold)', margin: '0 auto 2rem',
-          opacity: visible ? 1 : 0, transition: 'opacity 0.6s ease 0.6s, width 0.6s ease 0.6s',
-        }}/>
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem',
+          margin: '0 auto 1.5rem',
+          opacity: visible ? 1 : 0,
+          transition: 'opacity 0.6s ease 0.6s',
+        }}>
+          <div style={{ width: 40, height: 1, background: 'rgba(184,149,58,0.5)' }}/>
+          <svg width="14" height="14" viewBox="0 0 18 18" fill="var(--gold)">
+            <polygon points="9,1 11,7 17,7 12,11 14,17 9,13 4,17 6,11 1,7 7,7"/>
+          </svg>
+          <div style={{ width: 40, height: 1, background: 'rgba(184,149,58,0.5)' }}/>
+        </div>
 
         <p style={{
           fontFamily: 'var(--font-display)',
