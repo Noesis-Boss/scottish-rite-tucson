@@ -1,8 +1,10 @@
 {
+  "name": "scottish-rite",
   "root": ".",
   "port": 8080,
+  "local_port": 8080,
+  "entrypoints": ["index.html"],
   "build": {
-    "entrypoints": ["index.html"],
-    "outDir": "dist"
+    "outDir": "."
   }
 }
