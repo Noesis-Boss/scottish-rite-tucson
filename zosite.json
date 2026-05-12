@@ -1,0 +1,8 @@
+{
+  "root": ".",
+  "port": 8080,
+  "build": {
+    "entrypoints": ["index.html"],
+    "outDir": "dist"
+  }
+}
