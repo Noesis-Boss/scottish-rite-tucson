@@ -1,0 +1,11 @@
+{
+  "name": "jaknyfe.zocomputer.io",
+  "routes": [
+    {
+      "path": "/scottish-rite",
+      "target": "/home/workspace/scottish-rite-site",
+      "strip_prefix": "/scottish-rite",
+      "method": ["GET","HEAD","OPTIONS"]
+    }
+  ]
+}
